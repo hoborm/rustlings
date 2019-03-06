@@ -13,36 +13,27 @@ Alternatively, for a first-time Rust learner, there's several other resources:
 
 ## Getting Started
 
+To use `rustlings` you need to have [Rust](https://www.rust-lang.org/) installed on your computer. To install Rust, go to [rustup.rs](https://rustup.rs/).
+
+Once Rust is installed, clone the `rustlings` repository and enter the resulting directory:
+
+```bash
+git clone https://github.com/rust-lang/rustlings.git
+cd rustlings
+```
+
 _Note: If you're on MacOS, make sure you've installed Xcode and its developer tools by typing `xcode-select --install`._
 
 _Note: If you have Xcode 10+ installed, you also need to install the package file found at `/Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg`._
 
-You will need to have Rust installed. You can get it by visiting https://rustup.rs. This'll also install Cargo, Rust's package/project manager.
-
-## MacOS/Linux
-
-Just run:
+Once in the directory you can install `rustlings` on your machine and run the introduction:
 
 ```bash
-curl -L https://git.io/rustlings | bash
-# Or if you want it to be installed to a different path:
-curl -L https://git.io/rustlings | bash -s mypath/
+cargo install --path .
+rustlings
 ```
 
-This will install Rustlings and give you access to the `rustlings` command. Run it to get started!
-
-## Windows/Manually
-
-Basically: Clone the repository, checkout to the latest tag, run `cargo install`.
-
-```bash
-git clone https://github.com/rust-lang/rustlings
-cd rustlings
-git checkout tags/1.0.0 # or whatever the latest version is (find out at https://github.com/rust-lang/rustlings/releases/latest)
-cargo install --force --path .
-```
-
-Same as above, run `rustlings` to get started.
+If you choose to not install the `rustlings` command, just replace `rustlings` with `cargo run` in the rest of this text.
 
 ## Doing exercises
 
@@ -66,6 +57,12 @@ In case you want to go by your own order, or want to only verify a single exerci
 
 ```bash
 rustlings run exercises/path/to/exercise.rs
+```
+
+Or if it's a `#[test]`:
+
+```bash
+rustlings run --test exercises/path/to/exercise_with_test.rs
 ```
 
 In case you get stuck, there is usually a hint at the bottom of each exercise.
@@ -99,20 +96,18 @@ If you are interested in improving or adding new ones, please feel free to contr
 First step is to add the exercise! Call it `exercises/yourTopic/yourTopicN.rs`, make sure to
 put in some helpful links, and link to sections of the book in `exercises/yourTopic/README.md`.
 
-Next you want to make sure it runs when using `rustlings`. All exercises are stored in `info.toml`, under the `exercises` array. They're ordered by the order they're ran when using `rustlings verify`.
+Then, you'll want to make sure it gets verified when you run `rustlings verify`. Open `src/verify.rs` and
+put your exercise somewhere in there:
 
-You want to make sure where in the file you add your exercise. If you're not sure, add it at the bottom and ask in your pull request. To add an exercise, edit the file like this:
 ```diff
   ...
-+ [[exercises]]
-+ path = "exercises/yourTopic/yourTopicN.rs"
-+ mode = "compile"
+  compile_only("exercises/functions5.rs")?;
++ compile_only("exercises/yourTopic/yourTopicN.rs")?;
+  compile_only("exercises/test1.rs")?;
   ...
 ```
 
-The `mode` attribute decides whether Rustlings will only compile your exercise, or compile and test it. If you have tests to verify in your exercise, choose `test`, otherwise `compile`.
-
-That's all! Feel free to put up a pull request.
+That's all!
 
 ### Working on the source code
 
